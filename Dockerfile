@@ -5,6 +5,9 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt-get install wget screen -y
 RUN apt-get install lsb-core -y
 
+# postgres client
+RUN apt-get install postgresql-client -y
+
 # jdk
 RUN apt-get install openjdk-7-jre-headless -y
 
@@ -29,6 +32,7 @@ COPY ./version.txt /tmp/version.txt
 
 RUN useradd -ms /bin/bash django
 RUN mkdir -p /home/django/councilmatic && chown django /home/django/councilmatic
+RUN chown -R django /usr/local/lib/python3.6/site-packages/councilmatic_core
 
 VOLUME ["/home/django/councilmatic"]
 
@@ -38,7 +42,7 @@ WORKDIR /home/django/councilmatic
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
-EXPOSE 8000
+EXPOSE 8000 8001
 
 
 

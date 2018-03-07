@@ -8,6 +8,9 @@ services:
       - POSTGRES_PASSWORD=str0ng*p4ssw0rd
       - PGDATA=/var/lib/postgresql/data
     volumes:
+      ### ***Update path for your website postgres data directory here***
+      # - << website postgres data dir >>:/var/lib/postgresql/data
+      ### Phil
       - /Users/phillipcchin/work/councilmatic/councilmatic-website-data:/var/lib/postgresql/data
     ports:
       - 6432:5432
@@ -17,8 +20,8 @@ services:
     ports:
      - 8983:8983
     volumes:
-      ### Sample
-      #- <<local_solr_data_dir>>:/opt/solr/server/solr/mycores
+      ### ***Update solr data directory here***
+      #- <<local solr data dir>>:/opt/solr/server/solr/mycores
       ### Phil
       - /Users/phillipcchin/work/councilmatic/councilmatic-solr:/opt/solr/server/solr/mycores
     entrypoint:
@@ -30,8 +33,12 @@ services:
     container_name: councilmatic_website
     ports:
       - 8000:8000
+      - 8001:8001
     volumes:
-      - /Users/phillipcchin/work/councilmatic/councilmatic-starter-template:/home/django/councilmatic
+      ### ***Update the django website directory here (https://github.com/openoakland/councilmatic)***
+      #- <<councilmatic web dir>>:/home/django/councilmatic
+      ### Phil
+      - /Users/phillipcchin/work/councilmatic/councilmatic:/home/django/councilmatic
     depends_on:
       - postgres
       - solr
