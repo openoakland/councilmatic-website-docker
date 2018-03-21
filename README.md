@@ -127,6 +127,11 @@ cd ~/work/councilmatic
 docker-compose up
 ```
 
+**_To force downloading the latest version of the docker container:_**
+```
+docker-compose pull && docker-compose up
+```
+
 You should the logs for the containers in the output.  Just take a quick look at the output and make sure that there aren't any errors.
 
 ## Stopping the Councilmatic website environment
