@@ -99,6 +99,7 @@ Run the following commands:
 ```
 python manage.py migrate --noinput
 python manage.py createcachetable
+```
 
 ### Create Admin User for the webserver
 
@@ -112,10 +113,17 @@ After you're done, run the following command to log out of the container:
 exit
 ```
 
+### Shut down web environment
+```
+cd ~/work/councilmatic
+docker-compose down
+```
+
 # Starting up the Councilmatic website environment
 
-To start the Councilmatic website environment, cd into the councilmatic-website-docker directory and run the following command:
+To start the Councilmatic website environment, run the following commands:
 ```
+cd ~/work/councilmatic
 docker-compose up
 ```
 
