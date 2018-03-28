@@ -392,6 +392,8 @@ docker-compose down</code></pre>
 <p>To start the Councilmatic website environment, run the following commands:</p>
 <pre><code>cd ~/work/councilmatic
 docker-compose up</code></pre>
+<p><strong><em>To force downloading the latest version of the docker container:</em></strong></p>
+<pre><code>docker-compose pull &amp;&amp; docker-compose up</code></pre>
 <p>You should the logs for the containers in the output. Just take a quick look at the output and make sure that there aren’t any errors.</p>
 <div id="stopping-the-councilmatic-website-environment" class="section level2">
 <h2>Stopping the Councilmatic website environment</h2>
@@ -467,7 +469,7 @@ docker-compose up</code></pre>
 </tr>
 <tr class="odd">
 <td>Database</td>
-<td>opencivicdata</td>
+<td>oakland_councilmatic</td>
 </tr>
 </tbody>
 </table>
