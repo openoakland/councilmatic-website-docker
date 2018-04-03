@@ -212,7 +212,7 @@ Host | 127.0.0.1
 Port | 6432
 User | postgres  
 Password | str0ng*p4ssw0rd 
-Database | opencivicdata 
+Database | oakland_councilmatic
 
 _If you want to set a different password, you can change it in the docker-compose.yml file.  If you change the password, you will also have to change the database password in "councilmatic/councilmatic/settings_deployment.py" for Django otherwise, the webserver will not be able to connect to the database._
 
