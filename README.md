@@ -257,6 +257,7 @@ http://127.0.0.1:8001
 
 # Gotchas
 
+## Docker does not always release ports on Mac OS
 On Mac OS, Docker Compose has this bug where sometimes it doesn't release the mapped ports after you do "docker-compose down". 
 
 1. Quit Docker from the menu bar:
@@ -270,3 +271,16 @@ On Mac OS, Docker Compose has this bug where sometimes it doesn't release the ma
 Docker might take a little while to restart.
 
 3. Try starting up your webserver environment again
+
+## Port 8000 may not bind
+
+If the container is loading without error and showing no problems in the log but you cannot load the website at http://127.0.0.1:8001/ try changing the port to 8001.
+
+In the docker-compose.yml file under `webserver` change the ports section to look like this:
+
+````
+    ports:
+      #- 8000:8000
+      - 8001:8000
+````
+Then restart docker and bring the container back up.
