@@ -66,8 +66,9 @@ You will need to initialize the database and set up django for the first time.
 
 To start the Councilmatic website environment, cd into the councilmatic-website-docker directory and run the following command:
 ```
-docker-compose up
+docker-compose pull && docker-compose up &
 ```
+#### Note: The first time your run this command it will install all dependencies and may take a few minutes.
 
 You should check the logs for the containers in the output.  Just take a quick look at the output and make sure that there aren't any errors.
 
