@@ -52,7 +52,7 @@ cd ~/work/councilmatic
 git clone https://github.com/openoakland/councilmatic.git
 ```
 
-### Set up docker-compose.yml
+### 6. Set up docker-compose.yml
 
 In the councilmatic-website-docker directory, there is a file called 'docker-compose.yml'.  You will need to edit this file with a text editor to update the volume mapping for your computer.  The docker containers will read and write to these directories that you mapped on your host machine.  When you shut down the docker instances, the data should still persist in these directories on your host. 
 
@@ -62,16 +62,17 @@ Open the docker-compose.yml with a text editor and replace "phillipcchin" with y
 
 You will need to initialize the database and set up django for the first time.
 
-### Start up the Councilmatic website environment
+### 1. Start up the Councilmatic website environment
 
 To start the Councilmatic website environment, cd into the councilmatic-website-docker directory and run the following command:
 ```
-docker-compose up
+docker-compose pull && docker-compose up &
 ```
+#### Note: The first time your run this command it will install all dependencies and may take a few minutes.
 
 You should check the logs for the containers in the output.  Just take a quick look at the output and make sure that there aren't any errors.
 
-### Create database
+### 2. Create database
 
 First, log into the database container:
 
@@ -101,7 +102,7 @@ python manage.py migrate --noinput
 python manage.py createcachetable
 ```
 
-### Create Admin User for the webserver
+### 3. Create Admin User for the webserver
 
 You should still be logged into the webserver container.  Run the following command to set the username and password for your admin user:
 ```
@@ -113,23 +114,30 @@ After you're done, run the following command to log out of the container:
 exit
 ```
 
-### Shut down web environment
+### 4. Shut down web environment
 ```
 cd ~/work/councilmatic
 docker-compose down
 ```
 
-# Starting up the Councilmatic website environment
+### 5. Starting up the Councilmatic website environment
 
 To start the Councilmatic website environment, run the following commands:
 ```
 cd ~/work/councilmatic
-docker-compose up
+docker-compose up &
 ```
+## Access the Website
 
-**_To force downloading the latest version of the docker container:_**
+At this point you should be able to launch the website at the following URL: http://127.0.0.1:8000/
+
+If the website does not load check the console and logs for errors.
+
+# General commands for managing the Docker container and website
+
+## Force downloading the latest version of the docker container and start it
 ```
-docker-compose pull && docker-compose up
+docker-compose pull && docker-compose up &
 ```
 
 You should the logs for the containers in the output.  Just take a quick look at the output and make sure that there aren't any errors.
@@ -218,14 +226,14 @@ _If you want to set a different password, you can change it in the docker-compos
 
 If you restarted your webserver environment and cannot connect to the database port, 6432, from your host, try restarting Docker.  See the "Gotchas" section below. 
 
-# Viewing the Website with Your Browser
+## Viewing the Website with Your Browser
 
 Port 8000 from the django container is mapped to your host's port 8000.  To view the website with your browser, go to:
 ```
 http://127.0.0.1:8000/
 ```
 
-# Debugging Django
+## Debugging Django
 
 Port 8001 from the django container is also mapped to your host's port 8001.  You can start a second instance of django by doing the following:
 
@@ -249,6 +257,7 @@ http://127.0.0.1:8001
 
 # Gotchas
 
+## Docker does not always release ports on Mac OS
 On Mac OS, Docker Compose has this bug where sometimes it doesn't release the mapped ports after you do "docker-compose down". 
 
 1. Quit Docker from the menu bar:
@@ -262,3 +271,16 @@ On Mac OS, Docker Compose has this bug where sometimes it doesn't release the ma
 Docker might take a little while to restart.
 
 3. Try starting up your webserver environment again
+
+## Port 8000 may not bind
+
+If the container is loading without error and showing no problems in the log but you cannot load the website at http://127.0.0.1:8001/ try changing the port to 8001.
+
+In the docker-compose.yml file under `webserver` change the ports section to look like this:
+
+````
+    ports:
+      #- 8000:8000
+      - 8001:8000
+````
+Then restart docker and bring the container back up.
