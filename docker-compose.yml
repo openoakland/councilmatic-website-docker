@@ -11,9 +11,9 @@ services:
       ### ***Update path for your website postgres data directory here***
       # - << website postgres data dir >>:/var/lib/postgresql/data
       ### Phil
-      #- /Users/phillipcchin/work/councilmatic/councilmatic-website-data:/var/lib/postgresql/data
+      - /Users/phillipcchin/work/councilmatic/councilmatic-website-data:/var/lib/postgresql/data
       ### Howard
-      -  /Users/matis/Dropbox/OpenOakland/councilmatic/councilmatic-website-data:/var/lib/postgresql/data
+      #-  /Users/matis/Dropbox/OpenOakland/councilmatic/councilmatic-website-data:/var/lib/postgresql/data
     ports:
       - 6432:5432
   solr:
@@ -25,9 +25,9 @@ services:
       ### ***Update solr data directory here***
       #- <<local solr data dir>>:/opt/solr/server/solr/mycores
       ### Phil
-      #- /Users/phillipcchin/work/councilmatic/councilmatic-solr:/opt/solr/server/solr/mycores
+      - /Users/phillipcchin/work/councilmatic/councilmatic-solr:/opt/solr/server/solr/mycores
       ### Howard
-      - /Users/matis/Dropbox/OpenOakland/councilmatic/councilmatic-solr:/opt/solr/server/solr/mycores
+      #- /Users/matis/Dropbox/OpenOakland/councilmatic/councilmatic-solr:/opt/solr/server/solr/mycores
     entrypoint:
       - docker-entrypoint.sh
       - solr-precreate
@@ -36,15 +36,16 @@ services:
     image: ekkus93/councilmatic-website
     container_name: councilmatic_website
     ports:
-      - 8000:8000
-      - 8001:8001
+      #- 8000:8000
+      #- 8001:8001
+      - 8001:8000
     volumes:
       ### ***Update the django website directory here (https://github.com/openoakland/councilmatic)***
       #- <<councilmatic web dir>>:/home/django/councilmatic
       ### Phil
-      #- /Users/phillipcchin/work/councilmatic/councilmatic:/home/django/councilmatic
+      - /Users/phillipcchin/work/councilmatic/councilmatic:/home/django/councilmatic
       ### Howard
-      - /Users/matis/Dropbox/OpenOakland/councilmatic/councilmatic:/home/django/councilmatic
+      #- /Users/matis/Dropbox/OpenOakland/councilmatic/councilmatic:/home/django/councilmatic
     depends_on:
       - postgres
       - solr
