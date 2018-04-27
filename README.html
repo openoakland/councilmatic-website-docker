@@ -345,22 +345,26 @@ mkdir councilmatic-solr</code></pre>
 git clone https://github.com/openoakland/councilmatic.git</code></pre>
 </div>
 <div id="set-up-docker-compose.yml" class="section level3">
-<h3>Set up docker-compose.yml</h3>
-<p>In the councilmatic-website-docker directory, there is a file called ‘docker-compose.yml’. You will need to edit this file with a text editor to update the volume mapping for your computer. The docker containers will read and write to these directories that you mapped on your host machine. When you shut down the docker instances, the data should still persist in these directories on your host.</p>
-<p>Open the docker-compose.yml with a text editor and replace “phillipcchin” with your username.</p>
+<h3>6. Set up docker-compose.yml</h3>
+<p>~~In the councilmatic-website-docker directory, there is a file called ‘docker-compose.yml’. You will need to edit this file with a text editor to update the volume mapping for your computer. The docker containers will read and write to these directories that you mapped on your host machine. When you shut down the docker instances, the data should still persist in these directories on your host.</p>
+<p>Open the docker-compose.yml with a text editor and replace “phillipcchin” with your username.~~</p>
+<p>There was a change in the docker-compose.yml spec to allow relative paths for volumes. Don’t need to update the docker-compose.yml file anymore.</p>
 </div>
 </div>
 <div id="starting-up-the-councilmatic-website-environment-for-the-first-time" class="section level2">
 <h2>Starting up the Councilmatic website environment for the first time</h2>
 <p>You will need to initialize the database and set up django for the first time.</p>
 <div id="start-up-the-councilmatic-website-environment" class="section level3">
-<h3>Start up the Councilmatic website environment</h3>
+<h3>1. Start up the Councilmatic website environment</h3>
 <p>To start the Councilmatic website environment, cd into the councilmatic-website-docker directory and run the following command:</p>
-<pre><code>docker-compose up</code></pre>
+<pre><code>docker-compose pull &amp;&amp; docker-compose up &amp;</code></pre>
+<div id="note-the-first-time-your-run-this-command-it-will-install-all-dependencies-and-may-take-a-few-minutes." class="section level4">
+<h4>Note: The first time your run this command it will install all dependencies and may take a few minutes.</h4>
 <p>You should check the logs for the containers in the output. Just take a quick look at the output and make sure that there aren’t any errors.</p>
 </div>
+</div>
 <div id="create-database" class="section level3">
-<h3>Create database</h3>
+<h3>2. Create database</h3>
 <p>First, log into the database container:</p>
 <pre><code>docker exec -it -u postgres `docker ps | grep councilmatic_postgres | cut -f1 -d ' '` bash</code></pre>
 <p>After you are logged into the container, run the following command:</p>
@@ -374,27 +378,37 @@ git clone https://github.com/openoakland/councilmatic.git</code></pre>
 python manage.py createcachetable</code></pre>
 </div>
 <div id="create-admin-user-for-the-webserver" class="section level3">
-<h3>Create Admin User for the webserver</h3>
+<h3>3. Create Admin User for the webserver</h3>
 <p>You should still be logged into the webserver container. Run the following command to set the username and password for your admin user:</p>
 <pre><code>python manage.py createsuperuser</code></pre>
 <p>After you’re done, run the following command to log out of the container:</p>
 <pre><code>exit</code></pre>
 </div>
 <div id="shut-down-web-environment" class="section level3">
-<h3>Shut down web environment</h3>
+<h3>4. Shut down web environment</h3>
 <pre><code>cd ~/work/councilmatic
 docker-compose down</code></pre>
 </div>
-</div>
-</div>
-<div id="starting-up-the-councilmatic-website-environment" class="section level1">
-<h1>Starting up the Councilmatic website environment</h1>
+<div id="starting-up-the-councilmatic-website-environment" class="section level3">
+<h3>5. Starting up the Councilmatic website environment</h3>
 <p>To start the Councilmatic website environment, run the following commands:</p>
 <pre><code>cd ~/work/councilmatic
-docker-compose up</code></pre>
-<p><strong><em>To force downloading the latest version of the docker container:</em></strong></p>
-<pre><code>docker-compose pull &amp;&amp; docker-compose up</code></pre>
+docker-compose up &amp;</code></pre>
+</div>
+</div>
+<div id="access-the-website" class="section level2">
+<h2>Access the Website</h2>
+<p>At this point you should be able to launch the website at the following URL: <a href="http://127.0.0.1:8000/" class="uri">http://127.0.0.1:8000/</a></p>
+<p>If the website does not load check the console and logs for errors.</p>
+</div>
+</div>
+<div id="general-commands-for-managing-the-docker-container-and-website" class="section level1">
+<h1>General commands for managing the Docker container and website</h1>
+<div id="force-downloading-the-latest-version-of-the-docker-container-and-start-it" class="section level2">
+<h2>Force downloading the latest version of the docker container and start it</h2>
+<pre><code>docker-compose pull &amp;&amp; docker-compose up &amp;</code></pre>
 <p>You should the logs for the containers in the output. Just take a quick look at the output and make sure that there aren’t any errors.</p>
+</div>
 <div id="stopping-the-councilmatic-website-environment" class="section level2">
 <h2>Stopping the Councilmatic website environment</h2>
 <pre><code>docker-compose down</code></pre>
@@ -477,14 +491,13 @@ docker-compose up</code></pre>
 <p>If you restarted your webserver environment and cannot connect to the database port, 6432, from your host, try restarting Docker. See the “Gotchas” section below.</p>
 </div>
 </div>
-</div>
-<div id="viewing-the-website-with-your-browser" class="section level1">
-<h1>Viewing the Website with Your Browser</h1>
+<div id="viewing-the-website-with-your-browser" class="section level2">
+<h2>Viewing the Website with Your Browser</h2>
 <p>Port 8000 from the django container is mapped to your host’s port 8000. To view the website with your browser, go to:</p>
 <pre><code>http://127.0.0.1:8000/</code></pre>
 </div>
-<div id="debugging-django" class="section level1">
-<h1>Debugging Django</h1>
+<div id="debugging-django" class="section level2">
+<h2>Debugging Django</h2>
 <p>Port 8001 from the django container is also mapped to your host’s port 8001. You can start a second instance of django by doing the following:</p>
 <ol style="list-style-type: decimal">
 <li>Log into the webserver container:</li>
@@ -497,13 +510,16 @@ docker-compose up</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Open a browser and go to:</li>
 </ol>
-<pre><code>http://0.0.0.0:8001</code></pre>
+<pre><code>http://127.0.0.1:8001</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>Check the console for errors in django’s logs.</li>
 </ol>
 </div>
+</div>
 <div id="gotchas" class="section level1">
 <h1>Gotchas</h1>
+<div id="docker-does-not-always-release-ports-on-mac-os" class="section level2">
+<h2>Docker does not always release ports on Mac OS</h2>
 <p>On Mac OS, Docker Compose has this bug where sometimes it doesn’t release the mapped ports after you do “docker-compose down”.</p>
 <ol style="list-style-type: decimal">
 <li>Quit Docker from the menu bar:</li>
@@ -523,6 +539,16 @@ docker-compose up</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Try starting up your webserver environment again</li>
 </ol>
+</div>
+<div id="port-8000-may-not-bind" class="section level2">
+<h2>Port 8000 may not bind</h2>
+<p>If the container is loading without error and showing no problems in the log but you cannot load the website at <a href="http://127.0.0.1:8001/" class="uri">http://127.0.0.1:8001/</a> try changing the port to 8001.</p>
+<p>In the docker-compose.yml file under <code>webserver</code> change the ports section to look like this:</p>
+<pre><code>    ports:
+      #- 8000:8000
+      - 8001:8000</code></pre>
+<p>Then restart docker and bring the container back up.</p>
+</div>
 </div>
 
 

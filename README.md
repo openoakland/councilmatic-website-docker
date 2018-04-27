@@ -54,9 +54,11 @@ git clone https://github.com/openoakland/councilmatic.git
 
 ### 6. Set up docker-compose.yml
 
-In the councilmatic-website-docker directory, there is a file called 'docker-compose.yml'.  You will need to edit this file with a text editor to update the volume mapping for your computer.  The docker containers will read and write to these directories that you mapped on your host machine.  When you shut down the docker instances, the data should still persist in these directories on your host. 
+~~In the councilmatic-website-docker directory, there is a file called 'docker-compose.yml'.  You will need to edit this file with a text editor to update the volume mapping for your computer.  The docker containers will read and write to these directories that you mapped on your host machine.  When you shut down the docker instances, the data should still persist in these directories on your host. 
 
-Open the docker-compose.yml with a text editor and replace "phillipcchin" with your username.
+Open the docker-compose.yml with a text editor and replace "phillipcchin" with your username.~~
+
+There was a change in the docker-compose.yml spec to allow relative paths for volumes.  Don't need to update the docker-compose.yml file anymore.
 
 ## Starting up the Councilmatic website environment for the first time
 
