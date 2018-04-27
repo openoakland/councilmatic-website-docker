@@ -28,7 +28,7 @@ mkdir -p ~/work/councilmatic
 
 ```
 cd ~/work/councilmatic
-git clone git@github.com:ekkus93/councilmatic-website-docker.git
+git clone git@github.com:openoakland/councilmatic.git
 ```
 
 ### 3. Make Postgres data directory
