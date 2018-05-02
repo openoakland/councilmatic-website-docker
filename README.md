@@ -252,7 +252,7 @@ python manage.py runserver 0.0.0.0:8001
 
 3. Open a browser and go to:
 ```
-http://127.0.0.1:8001
+http://127.0.0.1:8001 (might need to do http://127.0.0.1:8001 )
 ```
 
 4. Check the console for errors in django's logs.
